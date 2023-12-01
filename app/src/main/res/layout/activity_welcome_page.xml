@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WelcomePageActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".WelcomePageActivity"
+        android:background="@color/blue_500">
+
+        <ImageView
+            android:id="@+id/img_welcome1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/welcome1">
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/welcome_page1_title"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
+                android:textSize="28sp"
+                android:textColor="@color/white">
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/welcome_page1_content"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="15dp">
+            </TextView>
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/nextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="NEXT"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_marginTop="200dp"
+            android:layout_marginLeft="270dp">
+        </androidx.appcompat.widget.AppCompatButton>
+
+    </LinearLayout>
+
+
+</FrameLayout>
+

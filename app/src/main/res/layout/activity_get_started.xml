@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".GetStartedActivity">
+
+    <ImageView
+        android:layout_width="210dp"
+        android:layout_height="120dp"
+        android:background="@drawable/logo_getstarted"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp">
+    </ImageView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/isi_data"
+        android:textSize="18sp"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="20dp">
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Nama Lengkap"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+        </TextView>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_nama"
+            android:layout_width="310dp"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/color_hint"
+            android:fontFamily="@font/poppins_regular"
+            android:hint="Masukkan nama lengkap Anda"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/color_hint"
+            android:textSize="14sp"
+            android:layout_marginLeft="20dp">
+        </com.google.android.material.textfield.TextInputEditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Berat Badan Sekarang"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_bbsekarang"
+                android:layout_width="310dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/color_hint"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Masukkan berat badan sekarang"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/color_hint"
+                android:textSize="14sp"
+                android:layout_marginLeft="20dp">
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_satuan_berat_1"
+                android:layout_width="75dp"
+                android:layout_height="40dp"
+                android:spinnerMode="dropdown">
+
+            </androidx.appcompat.widget.AppCompatSpinner>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Berat Badan Target"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_bbtarget"
+                android:layout_width="310dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/color_hint"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Masukkan berat badan sekarang"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/color_hint"
+                android:textSize="14sp"
+                android:layout_marginLeft="20dp">
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinnerWeightUnit2"
+                android:layout_width="75dp"
+                android:layout_height="40dp">
+            </androidx.appcompat.widget.AppCompatSpinner>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Tujuan Diet"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinnerTujuanDiet"
+                android:layout_width="385dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp">
+            </androidx.appcompat.widget.AppCompatSpinner>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Tanggal Target"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_tanggal"
+                android:layout_width="310dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/color_hint"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Pilih Tanggal Target"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/color_hint"
+                android:textSize="14sp"
+                android:layout_marginLeft="20dp">
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <ImageView
+                android:id="@+id/iconCalendar"
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:background="@drawable/calendar"
+                android:layout_marginLeft="10dp">
+            </ImageView>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Jumlah Maksimum Kalori Harian"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_maksimumkalori"
+                android:layout_width="320dp"
+                android:layout_height="40dp"
+                android:backgroundTint="@color/color_hint"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="Masukkan Jumlah Maksimum Kalori"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/color_hint"
+                android:textSize="14sp"
+                android:layout_marginLeft="20dp">
+            </com.google.android.material.textfield.TextInputEditText>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinnerMaksimumKalori"
+                android:layout_width="55dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp">
+            </androidx.appcompat.widget.AppCompatSpinner>
+
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="140dp"
+            android:layout_height="44dp"
+            android:text="SUBMIT"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/white"
+            android:background="@drawable/button_submit"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="230dp">
+        </androidx.appcompat.widget.AppCompatButton>
+
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

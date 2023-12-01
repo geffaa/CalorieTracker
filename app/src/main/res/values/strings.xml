@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">CalorieTracker</string>
+
+    <string name="welcome_page1_title">Maintain your calories \n and stay healthy!</string>
+    <string name="welcome_page2_title">Maintain your calories and stay healthy!</string>
+    <string name="welcome_page1_content">Join us in tracking your calorie intake \n effortlessly with our user-friendly calorie \n counting app. Start today and take control \n of your fitness journey</string>
+    <string name="isi_data">Isi data di bawah ini dengan benar!</string>
+
+    <string-array name="weight_units">
+        <item>Kilogram (kg)</item>
+        <item>Pound (lb)</item>
+        <item>Gram (g)</item>
+        <!-- Tambahkan unit berat badan lainnya jika diperlukan -->
+    </string-array>
+
+    <string name="default_web_client_id">AIzaSyCsshpDSoVr1z1nWoH4anstVbSVA6YgogI</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
