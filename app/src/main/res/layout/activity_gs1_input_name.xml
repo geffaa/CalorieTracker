@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".GetStarted.GS1_InputNameActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Masukkan Nama Kamu"
+        android:layout_marginTop="350sp"
+        android:gravity="center_horizontal"
+        android:textSize="24sp"
+        android:fontFamily="@font/montserrat_bold"
+        android:textColor="@color/blue_600"/>
+
+    <EditText
+        android:id="@+id/gs1_edt_name"
+        android:layout_width="290dp"
+        android:layout_height="50dp"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_bottom_border">
+    </EditText>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/gs1_btn_next"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/btn_blue_normal"
+        android:text="NEXT"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="280dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:fontFamily="@font/poppins_bold"/>
+
+</LinearLayout>
