@@ -7,7 +7,8 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+    </androidx.viewpager.widget.ViewPager>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -19,6 +20,7 @@
         app:tabIndicatorColor="@android:color/white"
         app:tabIndicatorHeight="4dp"
         app:tabSelectedTextColor="@android:color/white"
-        app:tabTextColor="@android:color/darker_gray"/>
+        app:tabTextColor="@color/md_blue_grey_50">
+    </com.google.android.material.tabs.TabLayout>
 
 </RelativeLayout>

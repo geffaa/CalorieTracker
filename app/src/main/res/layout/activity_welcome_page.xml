@@ -5,65 +5,86 @@
     android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WelcomePageActivity">
+    tools:context=".WelcomePage.WelcomePageActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".WelcomePageActivity"
+        tools:context=".WelcomePage.WelcomePageActivity"
         android:background="@color/blue_500">
-
-        <ImageView
-            android:id="@+id/img_welcome1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/welcome1">
-        </ImageView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@id/layout_info"
             android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp">
+            android:gravity="center">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/welcome_page1_title"
-                android:fontFamily="@font/poppins_bold"
-                android:gravity="center"
-                android:textSize="28sp"
-                android:textColor="@color/white">
-            </TextView>
 
-            <TextView
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:overScrollMode="never" />
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/pageIndicator"
+                android:background="@color/blue_500"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/welcome_page1_content"
-                android:fontFamily="@font/poppins_regular"
-                android:gravity="center"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:layout_marginTop="15dp">
-            </TextView>
+                android:layout_margin="30dp"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"
+                app:tabBackground="@drawable/onboarding_viewpager_selector_white"/>
+
+
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/nextButton"
+        <LinearLayout
+            android:id="@+id/layout_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:text="NEXT"
-            android:textSize="24sp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/poppins_bold"
-            android:layout_marginTop="200dp"
-            android:layout_marginLeft="270dp">
-        </androidx.appcompat.widget.AppCompatButton>
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/layout_rounded_top_white"
+            android:weightSum="10">
 
-    </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_lets_go"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/button_submit"
+                android:text="LETS GO"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_policy_terms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="50dp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:text="@string/start_text_advice"
+                android:textColorLink="@color/grey"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
 </FrameLayout>

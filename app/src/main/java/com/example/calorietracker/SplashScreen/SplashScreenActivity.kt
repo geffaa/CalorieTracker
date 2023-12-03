@@ -1,4 +1,4 @@
-package com.example.calorietracker
+package com.example.calorietracker.SplashScreen
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
+import com.example.calorietracker.R
+import com.example.calorietracker.WelcomePage.WelcomePageActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {

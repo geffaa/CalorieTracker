@@ -1,5 +1,6 @@
 package com.example.calorietracker
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -89,7 +90,9 @@ class LoginFragment : Fragment() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user = mAuth.currentUser
-                    // updateUI(user);
+
+                    // Simpan atau kirim data pengguna ke otentikasi Firebase sesuai kebutuhan aplikasi Anda
+                    // ...
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)

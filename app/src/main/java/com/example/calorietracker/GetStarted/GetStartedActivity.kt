@@ -1,10 +1,14 @@
-package com.example.calorietracker
+package com.example.calorietracker.GetStarted
 
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.Toast
+import com.example.calorietracker.R
 import com.example.calorietracker.databinding.ActivityGetStartedBinding
 import com.google.android.material.textfield.TextInputEditText
 import java.util.Calendar
@@ -33,8 +37,6 @@ class GetStartedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_get_started)
-
-        binding = ActivityGetStartedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         with(binding) {
@@ -48,7 +50,18 @@ class GetStartedActivity : AppCompatActivity() {
 
             spinnerSatuanBerat1.adapter = adapterSatuanBeratBadan
 
+            // Tambahkan callback untuk menangani pemilihan item pada Spinner
+            spinnerSatuanBerat1.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
+                    // Handle item selection, contohnya:
+                    val selectedSatuanBerat = satuanBeratBadan[position]
+                    Toast.makeText(this@GetStartedActivity, "Selected: $selectedSatuanBerat", Toast.LENGTH_SHORT).show()
+                }
 
+                override fun onNothingSelected(parentView: AdapterView<*>?) {
+                    // Do nothing here
+                }
+            })
         }
 
         edtTanggal = findViewById(R.id.edt_tanggal)
