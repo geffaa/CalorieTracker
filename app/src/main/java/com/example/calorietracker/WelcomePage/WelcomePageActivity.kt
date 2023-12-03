@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.viewpager2.widget.ViewPager2
 import com.example.calorietracker.R
-import com.example.calorietracker.SignUpFragment
 import com.example.calorietracker.TabActivity
 import com.example.calorietracker.WelcomePage.Adapter.OnboardingViewPageAdapter
 import com.example.calorietracker.databinding.ActivityWelcomePageBinding

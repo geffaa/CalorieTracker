@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
+import com.example.calorietracker.LoginFragment
+import com.example.calorietracker.SignUpFragment
 import com.google.android.material.tabs.TabLayout
 
 class TabFragment : Fragment() {

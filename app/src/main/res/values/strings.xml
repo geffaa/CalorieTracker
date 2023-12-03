@@ -25,5 +25,7 @@
 
     <string name="title_onboarding_3"> Track your weight gain, \n loss statics here </string>
     <string name="description_onboarding_3">Track the Statistics of Your Weight Gain and Loss Here! Welcome to Our App, the Best Place to Manage Your Health Journey</string>
+    <string name="title_activity_gs2_input_weight">GS2_InputWeightActivity</string>
+
 
 </resources>

@@ -1,13 +1,21 @@
 package com.example.calorietracker
 
-import android.content.ContentValues.TAG
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+import com.example.calorietracker.GetStarted.GS1_InputNameActivity
+import com.example.calorietracker.GetStarted.GetStartedActivity
+import com.example.calorietracker.databinding.FragmentLoginBinding
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -16,92 +24,102 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginFragment : Fragment() {
-    private val RC_SIGN_IN = 9001
-    private lateinit var mAuth: FirebaseAuth
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private lateinit var binding: FragmentLoginBinding
+    private lateinit var Auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
 
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance()
-
-        // Configure Google Sign In
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
+                Auth.signInWithCredential(credential).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        startActivity(Intent(requireActivity(), GS1_InputNameActivity::class.java))
+                    } else {
+                        Toast.makeText(requireContext(), "Sign In Failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: ApiException) {
+                Toast.makeText(requireContext(), "Sign In Failed", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
+    ): View {
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        val loginButton: MaterialButton = view.findViewById(R.id.btn_loginGoogle)
-        loginButton.setOnClickListener {
-            signIn()
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+        Auth = FirebaseAuth.getInstance()
+
+        binding.btnLoginGoogle.setOnClickListener {
+            val signInClient = googleSignInClient.signInIntent
+            launcher.launch(signInClient)
         }
 
-        return view
-    }
+        binding.loginBtn.setOnClickListener {
+            val email = binding.textInputLayoutEmail.editText?.text.toString().trim()
+            val password = binding.textInputLayoutPassword.editText?.text.toString().trim()
 
-    private fun signIn() {
-        val signInIntent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account?.idToken)
-            } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e)
-            }
-        }
-    }
-
-    private fun firebaseAuthWithGoogle(idToken: String?) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        mAuth.signInWithCredential(credential)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
-                    val user = mAuth.currentUser
-
-                    // Simpan atau kirim data pengguna ke otentikasi Firebase sesuai kebutuhan aplikasi Anda
-                    // ...
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    // updateUI(null);
+            Auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Login berhasil
+                        checkIfFirstTimeLogin(email)
+                    } else {
+                        // Login gagal
+                        Toast.makeText(
+                            requireContext(),
+                            "Authentication failed. Check your email and password.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
+        }
     }
 
-    companion object {
-        private const val TAG = "LoginFragment"
+    private fun checkIfFirstTimeLogin(email: String) {
+        Auth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val signInMethods = task.result?.signInMethods
+                if (signInMethods?.isEmpty() == true) {
+                    // User baru, arahkan ke GetStartedActivity
+                    startActivity(Intent(requireActivity(), GS1_InputNameActivity::class.java))
+                } else {
+                    // User sudah pernah login, arahkan ke HomeActivity
+                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                }
+            } else {
+                // Jika check gagal, tampilkan pesan ke pengguna.
+                Toast.makeText(requireContext(), "Failed to check user.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            startActivity(Intent(requireActivity(), GS1_InputNameActivity::class.java))
+        }
     }
 }
