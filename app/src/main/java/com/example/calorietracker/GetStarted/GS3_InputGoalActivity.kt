@@ -5,11 +5,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.PopupMenu
+import android.widget.Toast
 import com.example.calorietracker.R
 import com.example.calorietracker.databinding.ActivityGs3InputGoalBinding
 
 class GS3_InputGoalActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGs3InputGoalBinding
+    private var selectedDate: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,26 +19,29 @@ class GS3_InputGoalActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.gs3BtnNext.setOnClickListener {
-            // Handle button click here
-            // You can get the text from the EditTexts like this:
-            val dietGoal = binding.editTextTujuanDiet.text.toString()
-            val targetDate = binding.gs3datePickerTextInputEditText.text.toString()
-            val dailyCalories = binding.gs3jumlahkalori.text.toString()
+            val dietGoal = binding.editTextTujuanDiet.text.toString().trim()
+            val targetDate = selectedDate // Menggunakan variabel yang menyimpan tanggal
+            val dailyCalories = binding.gs3jumlahkalori.text.toString().trim()
 
-            // TODO: Use the above values
-
-            // Intent to GS4_CongratsActivity
-            val intent = Intent(this, GS4_CongratsActivity::class.java)
-            startActivity(intent)
+            if (dietGoal.isEmpty() || targetDate.isEmpty() || dailyCalories.isEmpty()) {
+                Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(this, GS4_CongratsActivity::class.java)
+                intent.putExtra("dietGoal", dietGoal)
+                intent.putExtra("targetDate", targetDate)
+                intent.putExtra("dailyCalories", dailyCalories)
+                startActivity(intent)
+            }
         }
 
         // If you want to show a DatePicker when the user clicks on the date EditText:
         binding.gs3datePickerTextInputEditText.setOnClickListener {
             val datePickerDialog = DatePickerDialog(this)
-            datePickerDialog.setOnDateSetListener { view, year, month, dayOfMonth ->
+            datePickerDialog.setOnDateSetListener { _, year, month, dayOfMonth ->
                 // This gets called when the user sets a date
                 // You can set this date to your EditText like this:
-                binding.gs3datePickerTextInputEditText.setText("$dayOfMonth/$month/$year")
+                selectedDate = "$dayOfMonth/$month/$year"
+                binding.gs3datePickerTextInputEditText.setText(selectedDate)
             }
             datePickerDialog.show()
         }

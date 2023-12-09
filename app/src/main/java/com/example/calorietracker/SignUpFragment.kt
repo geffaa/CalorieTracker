@@ -34,6 +34,7 @@ class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
     private lateinit var Auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private val PREFS_NAME = "MyPrefsFile"
 
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -79,28 +80,55 @@ class SignUpFragment : Fragment() {
         }
 
         binding.btnGetStarted.setOnClickListener {
-            val email = binding.textInputLayoutEmail.editText?.text.toString()
-            val password = binding.textInputLayoutPassword.editText?.text.toString()
-            val confirmPassword = binding.textInputLayoutConfirmationPassword.editText?.text.toString()
+            val email = binding.textInputLayoutEmail.editText?.text.toString().trim()
+            val password = binding.textInputLayoutPassword.editText?.text.toString().trim()
+            val confirmPassword =
+                binding.textInputLayoutConfirmationPassword.editText?.text.toString().trim()
 
-            if (password != confirmPassword) {
-                Toast.makeText(requireContext(), "Password and Confirm Password do not match", Toast.LENGTH_SHORT).show()
+            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Email, Password or Confirm Password cannot be empty",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (password != confirmPassword) {
+                Toast.makeText(
+                    requireContext(),
+                    "Password and Confirm Password do not match",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 Auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(requireActivity()) { task ->
                         if (task.isSuccessful) {
                             // Sign up success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
-                            val user = Auth.currentUser
-                            startActivity(Intent(requireActivity(), GS1_InputNameActivity::class.java))
+                            saveLoginInfo(email)
+                            startActivity(
+                                Intent(
+                                    requireActivity(),
+                                    GS1_InputNameActivity::class.java
+                                )
+                            )
                         } else {
                             // If sign up fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                            Toast.makeText(requireContext(), "Sign Up failed.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Sign Up failed.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
             }
         }
+    }
+
+    private fun saveLoginInfo(email: String) {
+        val sharedPref = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putString("user_email", email)
+        editor.apply()
     }
 
     override fun onStart() {

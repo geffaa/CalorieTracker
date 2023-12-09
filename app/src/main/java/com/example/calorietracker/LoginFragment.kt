@@ -29,6 +29,7 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var Auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private val PREFS_NAME = "MyPrefsFile"
 
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -83,6 +84,7 @@ class LoginFragment : Fragment() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         // Login berhasil
+                        saveLoginInfo(email)
                         checkIfFirstTimeLogin(email)
                     } else {
                         // Login gagal
@@ -94,6 +96,13 @@ class LoginFragment : Fragment() {
                     }
                 }
         }
+    }
+
+    private fun saveLoginInfo(email: String) {
+        val sharedPref = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putString("user_email", email)
+        editor.apply()
     }
 
     private fun checkIfFirstTimeLogin(email: String) {

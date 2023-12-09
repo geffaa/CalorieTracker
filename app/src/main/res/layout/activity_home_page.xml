@@ -199,7 +199,7 @@
             android:padding="@dimen/margin_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="22/11/2023"
+            android:text=""
             android:layout_marginTop="130dp"
             android:layout_marginLeft="210dp"
             android:fontFamily="@font/montserrat_bold"/>
