@@ -2,6 +2,7 @@ package com.example.calorietracker
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.calorietracker.GetStarted.GS1_InputNameActivity
 import com.example.calorietracker.GetStarted.GetStartedActivity
+import com.example.calorietracker.HomePage.HomePageActivity
 import com.example.calorietracker.databinding.FragmentLoginBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -23,6 +25,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginFragment : Fragment() {
 
@@ -30,6 +33,7 @@ class LoginFragment : Fragment() {
     private lateinit var Auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private val PREFS_NAME = "MyPrefsFile"
+    private val firestore = FirebaseFirestore.getInstance()
 
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -39,7 +43,7 @@ class LoginFragment : Fragment() {
                 val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
                 Auth.signInWithCredential(credential).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        startActivity(Intent(requireActivity(), GS1_InputNameActivity::class.java))
+                        startActivity(Intent(requireActivity(), GetStartedActivity::class.java))
                     } else {
                         Toast.makeText(requireContext(), "Sign In Failed", Toast.LENGTH_SHORT).show()
                     }
@@ -83,14 +87,61 @@ class LoginFragment : Fragment() {
             Auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // Login berhasil
-                        saveLoginInfo(email)
-                        checkIfFirstTimeLogin(email)
+                        val user = Auth.currentUser
+                        user?.let {
+                            // Pengecekan role dari Firestore
+                            firestore.collection("users").document(it.uid)
+                                .get()
+                                .addOnSuccessListener { document ->
+                                    if (document != null && document.exists()) {
+                                        val role = document.getString("role")
+
+                                        if (role == "admin") {
+                                            startActivity(
+                                                Intent(
+                                                    requireActivity(),
+                                                    AdminActivity::class.java
+                                                )
+                                            )
+                                        } else {
+                                            // Pengecekan apakah data GetStarted sudah diisi atau belum
+                                            val sharedPref = requireActivity().getSharedPreferences(
+                                                PREFS_NAME,
+                                                Context.MODE_PRIVATE
+                                            )
+                                            val isGetStartedCompleted = sharedPref.getBoolean(
+                                                "is_get_started_completed",
+                                                false
+                                            )
+
+                                            if (isGetStartedCompleted) {
+                                                startActivity(
+                                                    Intent(
+                                                        requireActivity(),
+                                                        HomePageActivity::class.java
+                                                    )
+                                                )
+                                            } else {
+                                                startActivity(
+                                                    Intent(
+                                                        requireActivity(),
+                                                        GetStartedActivity::class.java
+                                                    )
+                                                )
+                                            }
+                                        }
+                                    } else {
+                                        Log.d(TAG, "No such document")
+                                    }
+                                }
+                                .addOnFailureListener { exception ->
+                                    Log.w(TAG, "get failed with ", exception)
+                                }
+                        }
                     } else {
-                        // Login gagal
                         Toast.makeText(
                             requireContext(),
-                            "Authentication failed. Check your email and password.",
+                            "Autentikasi gagal. Periksa email dan password Anda.",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -111,10 +162,10 @@ class LoginFragment : Fragment() {
                 val signInMethods = task.result?.signInMethods
                 if (signInMethods?.isEmpty() == true) {
                     // User baru, arahkan ke GetStartedActivity
-                    startActivity(Intent(requireActivity(), GS1_InputNameActivity::class.java))
+                    startActivity(Intent(requireActivity(), GetStartedActivity::class.java))
                 } else {
                     // User sudah pernah login, arahkan ke HomeActivity
-                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    startActivity(Intent(requireActivity(), HomePageActivity::class.java))
                 }
             } else {
                 // Jika check gagal, tampilkan pesan ke pengguna.
@@ -127,8 +178,11 @@ class LoginFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        if (FirebaseAuth.getInstance().currentUser != null) {
-            startActivity(Intent(requireActivity(), GS1_InputNameActivity::class.java))
+        val sharedPref = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val userEmail = sharedPref.getString("user_email", null)
+
+        if (FirebaseAuth.getInstance().currentUser != null || userEmail != null) {
+            startActivity(Intent(requireActivity(), HomePageActivity::class.java))
         }
     }
 }

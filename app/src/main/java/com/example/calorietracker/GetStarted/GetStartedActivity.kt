@@ -1,98 +1,78 @@
 package com.example.calorietracker.GetStarted
 
 import android.app.DatePickerDialog
+import android.content.Context
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.Toast
-import com.example.calorietracker.R
+import android.widget.TextView
 import com.example.calorietracker.databinding.ActivityGetStartedBinding
-import com.google.android.material.textfield.TextInputEditText
-import java.util.Calendar
 
 class GetStartedActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGetStartedBinding
-
-    private lateinit var edtTanggal: TextInputEditText
-
-    private val satuanBeratBadan = arrayOf(
-        "Kg",
-        "Pound"
-    )
-
-    companion object {
-        const val EXTRA_NAME = "name"
-        const val EXTRA_CURRENT_WEIGHT = "cWeight"
-        const val EXTRA_CURRENT_WEIGHT_SATUAN = "cWeightSatuan"
-        const val EXTRA_TARGET_WEIGHT = "tWeight"
-        const val EXTRA_TARGET_WEIGHT_SATUAN = "tWeightSatuan"
-        const val EXTRA_CALORIES = "calories"
-        const val EXTRA_GOALS = "goals"
-    }
+    private var selectedDate: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_get_started)
+        binding = ActivityGetStartedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        with(binding) {
-            val adapterSatuanBeratBadan = ArrayAdapter(
-                this@GetStartedActivity,
-                android.R.layout.simple_spinner_item,
-                satuanBeratBadan
-            )
+        val satuanBerat = arrayOf("kg", "pound")
+        val tujuanDiet = arrayOf("Pilih tujuan Diet anda", "bulking", "cutting", "maintaining")
+        val satuanKalori = arrayOf("kal", "kkal") // Array baru untuk satuan kalori
 
-            adapterSatuanBeratBadan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.gsdatePickerTextInputEditText.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(this)
+            datePickerDialog.setOnDateSetListener { _, year, month, dayOfMonth ->
+                selectedDate = "$dayOfMonth/$month/$year"
+                binding.gsdatePickerTextInputEditText.setText(selectedDate)
+            }
+            datePickerDialog.show()
+        }
 
-            spinnerSatuanBerat1.adapter = adapterSatuanBeratBadan
+        binding.spinnerMaksimumKalori.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, satuanKalori)
 
-            // Tambahkan callback untuk menangani pemilihan item pada Spinner
-            spinnerSatuanBerat1.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
-                    // Handle item selection, contohnya:
-                    val selectedSatuanBerat = satuanBeratBadan[position]
-                    Toast.makeText(this@GetStartedActivity, "Selected: $selectedSatuanBerat", Toast.LENGTH_SHORT).show()
+        binding.spinnerSatuanBerat1.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, satuanBerat)
+        binding.spinnerWeightUnit2.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, satuanBerat)
+        val adapter = object : ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tujuanDiet) {
+            override fun isEnabled(position: Int): Boolean {
+                return position != 0
+            }
+
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view = super.getDropDownView(position, convertView, parent)
+                val tv = view as TextView
+                if (position == 0) {
+                    tv.setTextColor(Color.GRAY)
+                } else {
+                    tv.setTextColor(Color.BLACK)
                 }
-
-                override fun onNothingSelected(parentView: AdapterView<*>?) {
-                    // Do nothing here
-                }
-            })
+                return view
+            }
         }
+        binding.spinnerTujuanDiet.adapter = adapter
 
-        edtTanggal = findViewById(R.id.edt_tanggal)
-        val iconCalendar: ImageView = findViewById(R.id.iconCalendar)
-
-        edtTanggal.setOnClickListener{
-            showDatePickerDialog()
+        binding.btnSubmit.setOnClickListener {
+            val sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+            with (sharedPref.edit()) {
+                putString("nama", binding.edtNama.text.toString())
+                putString("bb_sekarang", binding.edtBbsekarang.text.toString())
+                putString("bb_target", binding.edtBbtarget.text.toString())
+                putString("tanggal", binding.gsdatePickerTextInputEditText.text.toString())
+                putString("maksimum_kalori", binding.edtMaksimumkalori.text.toString())
+                putString("satuan_berat_1", binding.spinnerSatuanBerat1.selectedItem.toString())
+                putString("satuan_berat_2", binding.spinnerWeightUnit2.selectedItem.toString())
+                putString("tujuan_diet", binding.spinnerTujuanDiet.selectedItem.toString())
+                putString("satuan_kalori", binding.spinnerMaksimumKalori.selectedItem.toString()) // Simpan satuan kalori yang dipilih
+                apply()
+                apply()
+            }
         }
-
-        iconCalendar.setOnClickListener{
-            showDatePickerDialog()
-        }
-    }
-
-    private fun showDatePickerDialog() {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day =  calendar.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(
-            this,
-            { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedDate = "$selectedDay-${selectedMonth + 1}-$selectedYear"
-                edtTanggal.setText(selectedDate)
-            },
-            year,
-            month,
-            day
-        )
-
-        datePickerDialog.show()
     }
 }

@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.fragment.app.Fragment
 import com.example.calorietracker.GetStarted.GS1_InputNameActivity
+import com.example.calorietracker.HomePage.HomePageActivity
 import com.example.calorietracker.databinding.FragmentSignUpBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -25,9 +26,9 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.firestore
 
 private const val TAG = "SignUpFragment"
-private const val RC_SIGN_UP_GOOGLE = 9002
 
 class SignUpFragment : Fragment() {
 
@@ -35,6 +36,7 @@ class SignUpFragment : Fragment() {
     private lateinit var Auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private val PREFS_NAME = "MyPrefsFile"
+    private val firestore = Firebase.firestore
 
     private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -88,41 +90,55 @@ class SignUpFragment : Fragment() {
             if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
-                    "Email, Password or Confirm Password cannot be empty",
+                    "Email, Password, atau Confirm Password tidak boleh kosong",
                     Toast.LENGTH_SHORT
                 ).show()
             } else if (password != confirmPassword) {
                 Toast.makeText(
                     requireContext(),
-                    "Password and Confirm Password do not match",
+                    "Password dan Confirm Password tidak cocok",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
                 Auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(requireActivity()) { task ->
                         if (task.isSuccessful) {
-                            // Sign up success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
-                            saveLoginInfo(email)
-                            startActivity(
-                                Intent(
-                                    requireActivity(),
-                                    GS1_InputNameActivity::class.java
+                            val user = Auth.currentUser
+                            user?.let {
+                                // Simpan data pengguna ke Firestore
+                                val userData = hashMapOf(
+                                    "email" to email,
+                                    "password" to password, // Ini hanya contoh, tidak disarankan menyimpan password seperti ini
+                                    "role" to "user"
                                 )
-                            )
+
+                                firestore.collection("users").document(it.uid)
+                                    .set(userData)
+                                    .addOnSuccessListener {
+                                        Log.d(TAG, "DocumentSnapshot successfully written!")
+                                        saveLoginInfo(email)
+                                        startActivity(
+                                            Intent(
+                                                requireActivity(),
+                                                HomePageActivity::class.java
+                                            )
+                                        )
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.w(TAG, "Error writing document", e)
+                                    }
+                            }
                         } else {
-                            // If sign up fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                            Toast.makeText(
-                                requireContext(),
-                                "Sign Up failed.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(requireContext(), "Sign Up gagal.", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
             }
         }
     }
+
 
     private fun saveLoginInfo(email: String) {
         val sharedPref = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -134,8 +150,11 @@ class SignUpFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        if (FirebaseAuth.getInstance().currentUser != null) {
-            startActivity(Intent(requireActivity(), GS1_InputNameActivity::class.java))
+        val sharedPref = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val userEmail = sharedPref.getString("user_email", null)
+
+        if (FirebaseAuth.getInstance().currentUser != null || userEmail != null) {
+            startActivity(Intent(requireActivity(), HomePageActivity::class.java))
         }
     }
 }

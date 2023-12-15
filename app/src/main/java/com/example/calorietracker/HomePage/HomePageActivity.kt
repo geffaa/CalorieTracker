@@ -1,17 +1,29 @@
 package com.example.calorietracker.HomePage
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.calorietracker.GetStarted.GetStartedActivity
 import com.example.calorietracker.databinding.ActivityHomePageBinding
 
 class HomePageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomePageBinding
+    private val PREFS_NAME = "MyPrefsFile"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val sharedPref = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val isFirstTime = sharedPref.getBoolean("is_first_time", true)
+
+        if (isFirstTime) {
+            startActivity(Intent(this, GetStartedActivity::class.java))
+            sharedPref.edit().putBoolean("is_first_time", false).apply()
+        }
 
         val beratyangdiinginkan = intent.getStringExtra("beratyangdiinginkan")
         val satuanberatyangdiinginkan = intent.getStringExtra("satuanberatyangdiinginkan")
