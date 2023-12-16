@@ -100,7 +100,7 @@ class LoginFragment : Fragment() {
                                             startActivity(
                                                 Intent(
                                                     requireActivity(),
-                                                    AdminActivity::class.java
+                                                    HomePageActivity::class.java
                                                 )
                                             )
                                         } else {

@@ -8,8 +8,8 @@
     tools:context=".GetStarted.GetStartedActivity">
 
     <ImageView
-        android:layout_width="210dp"
-        android:layout_height="120dp"
+        android:layout_width="180dp"
+        android:layout_height="90dp"
         android:background="@drawable/logo_getstarted"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp">
@@ -21,7 +21,7 @@
         android:text="@string/isi_data"
         android:textSize="18sp"
         android:fontFamily="@font/poppins_bold"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp">
     </TextView>
 
@@ -38,7 +38,7 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="20dp">
         </TextView>
 
         <com.google.android.material.textfield.TextInputEditText

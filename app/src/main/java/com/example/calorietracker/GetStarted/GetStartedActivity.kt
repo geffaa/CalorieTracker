@@ -2,6 +2,7 @@ package com.example.calorietracker.GetStarted
 
 import android.app.DatePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.calorietracker.MainActivity
 import com.example.calorietracker.databinding.ActivityGetStartedBinding
 
 class GetStartedActivity : AppCompatActivity() {
@@ -73,6 +75,9 @@ class GetStartedActivity : AppCompatActivity() {
                 apply()
                 apply()
             }
+
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 }

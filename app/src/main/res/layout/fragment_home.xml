@@ -1,14 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/blue_200"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <ImageView
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/avatar"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp">
+        </ImageView>
+
+        <TextView
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:text="myCalorieTracker"
+            android:textSize="18sp"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="50dp"
+            android:textColor="@color/black">
+        </TextView>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_notifications_24"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="45dp">
+        </ImageView>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/hm_tv_name"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="Hi, Yodhim"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="30dp"
+        android:textColor="@color/black">
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daily Stats"
+        android:textSize="24sp"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginLeft="30dp"
+        android:textColor="@color/black">
+    </TextView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="5dp"
+        android:layout_width="375dp"
+        android:layout_height="200dp"
+        app:cardCornerRadius="8dp"
+        android:layout_gravity="center_horizontal"
+        app:cardBackgroundColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="Target kalori"/>
+
+                    <TextView
+                        android:id="@+id/hm_tv_targetkalori"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="500 Kcal"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="40dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="Target berat"/>
+
+                    <TextView
+                        android:id="@+id/hm_tv_targetberat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 Kg"/>
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="Makanan"/>
+
+                    <TextView
+                        android:id="@+id/hm_tv_makanan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 Kcal"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="35dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="Workout"/>
+
+                    <TextView
+                        android:id="@+id/hm_tv_workout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 Kcal"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:padding="@dimen/margin_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sisa Kalori"
+            android:layout_marginTop="110dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/montserrat_bold"/>
+
+        <TextView
+            android:id="@+id/hm_tv_sisakalori"
+            android:padding="@dimen/margin_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="500 kal"
+            android:layout_marginTop="130dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/montserrat_bold"/>
+
+        <TextView
+            android:padding="@dimen/margin_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tanggal Target"
+            android:layout_marginTop="110dp"
+            android:layout_marginLeft="210dp"
+            android:fontFamily="@font/montserrat_bold"/>
+
+        <TextView
+            android:id="@+id/hm_tv_tgltarget"
+            android:padding="@dimen/margin_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="22/02/2019"
+            android:layout_marginTop="130dp"
+            android:layout_marginLeft="210dp"
+            android:fontFamily="@font/montserrat_bold"/>
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

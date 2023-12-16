@@ -109,7 +109,6 @@ class SignUpFragment : Fragment() {
                                 // Simpan data pengguna ke Firestore
                                 val userData = hashMapOf(
                                     "email" to email,
-                                    "password" to password, // Ini hanya contoh, tidak disarankan menyimpan password seperti ini
                                     "role" to "user"
                                 )
 
