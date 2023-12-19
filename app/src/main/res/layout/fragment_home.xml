@@ -5,51 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/blue_200"
+    android:background="@drawable/bgmain"
     tools:context=".HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:src="@drawable/avatar"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="30dp">
-        </ImageView>
-
-        <TextView
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:text="myCalorieTracker"
-            android:textSize="18sp"
-            android:fontFamily="@font/poppins_bold"
-            android:layout_marginTop="35dp"
-            android:layout_marginLeft="50dp"
-            android:textColor="@color/black">
-        </TextView>
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/baseline_notifications_24"
-            android:layout_marginTop="35dp"
-            android:layout_marginLeft="45dp">
-        </ImageView>
-
-    </LinearLayout>
+        android:orientation="vertical">
 
     <TextView
         android:id="@+id/hm_tv_name"
-        android:layout_width="180dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hi, Yodhim"
         android:textSize="16sp"
         android:fontFamily="@font/poppins_regular"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="75dp"
         android:layout_marginLeft="30dp"
         android:textColor="@color/black">
     </TextView>
@@ -64,147 +35,415 @@
         android:textColor="@color/black">
     </TextView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_marginTop="5dp"
-        android:layout_width="375dp"
-        android:layout_height="200dp"
-        app:cardCornerRadius="8dp"
-        android:layout_gravity="center_horizontal"
-        app:cardBackgroundColor="@color/white">
+    <LinearLayout
+        android:id="@+id/linearLayoutBIG"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="25dp">
+        <!-- BAGIAN DATE -->
+        <LinearLayout
+            android:id="@+id/linearLayoutDate"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:background="@drawable/datestyle"
+            android:layout_marginBottom="10dp">
+
+            <ImageButton
+                android:id="@+id/imageButtonBack"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_keyboard_arrow_left_24"
+                android:background="@android:color/transparent"
+                android:contentDescription="Your description"
+                android:onClick="onBackButtonClick"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:background="@color/white">
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:id="@+id/txt_date_now"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Date Place Holder"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imageButtonNext"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_keyboard_arrow_right_24"
+                android:background="@android:color/transparent"
+                android:contentDescription="Your description"
+                android:onClick="onNextButtonClick"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
+        </LinearLayout>
 
         <LinearLayout
+        android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:orientation="vertical">
+            android:background="@drawable/cardstyle"
+            android:orientation="horizontal"
+            android:padding="15dp"
+            android:layout_marginTop="10dp"
+            >
+
+
+            <!-- Bagian Pertama -->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="10dp">
+                    android:padding="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/progress_circular_indicator2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:indicatorColor="@color/blue_500"
+                        app:indicatorSize="130dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/progress_circular_indicator"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:trackColor="@color/blue_200"
+                        app:trackCornerRadius="26dp"
+                        app:trackThickness="2dp" />
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/progress_circular_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:progress="30"
+                        app:indicatorColor="@color/blue_500"
+                        app:indicatorSize="120dp"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:trackColor="@color/blue_50"
+                        app:trackCornerRadius="26dp"
+                        app:trackThickness="14dp" />
+
+                    <TextView
+                        android:id="@+id/text_remaining_cal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/blue_500"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/textView2"
+                        app:layout_constraintEnd_toEndOf="@+id/progress_circular_indicator"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/progress_circular_indicator"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="cal left"
+                        android:textColor="@color/blue_500"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/progress_circular_indicator"
+                        app:layout_constraintEnd_toEndOf="@+id/progress_circular_indicator"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="@+id/progress_circular_indicator"
+                        app:layout_constraintTop_toBottomOf="@+id/text_remaining_cal" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+            <!-- Bagian Kedua -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="0dp"
+                android:paddingTop="15dp">
+
+                <!--            breakfast -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txt_count_breakfast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 "
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="Target kalori"/>
-
-                    <TextView
-                        android:id="@+id/hm_tv_targetkalori"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="500 Kcal"/>
-
+                        android:text="  Breakfast"
+                        android:textSize="10sp" />
                 </LinearLayout>
+
+                <!--            launch-->
                 <LinearLayout
-                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="40dp">
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:id="@+id/txt_count_lunch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5  "
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="Target berat"/>
+                        android:text="  Lunch"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <!--            dinner-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
 
                     <TextView
-                        android:id="@+id/hm_tv_targetberat"
+                        android:id="@+id/txt_count_dinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0 Kg"/>
+                        android:text="3  "
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  Dinner"
+                        android:textSize="10sp" />
                 </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="20dp"
+            android:layout_width="360dp"
+            android:layout_height="210dp"
+            app:cardCornerRadius="20dp"
+            android:layout_gravity="center_horizontal">
+
             <LinearLayout
-                android:layout_marginTop="@dimen/margin_medium"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
+                android:layout_height="20dp"
                 android:orientation="horizontal"
+                android:layout_marginTop="55dp"
+                android:layout_marginLeft="25dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tujuan : "
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/hm_tv_tujuandiet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bulking"
+                    android:textSize="12sp">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="80dp"
+                android:layout_marginLeft="25dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Maksimum Kalori Harian : "
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/hm_tv_targetkalori"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="110kal"
+                    android:textSize="12sp">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="105dp"
+                android:layout_marginLeft="25dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tanggal Target : "
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_bold">
+                </TextView>
+
+                <TextView
+                    android:id="@+id/hm_tv_tgltarget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12/11/2019"
+                    android:textSize="12sp">
+                </TextView>
+
+            </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="GOALS"
+                    android:textSize="24sp"
+                    android:gravity="center_horizontal"
+                    android:fontFamily="@font/poppins_bold"
+                    android:paddingTop="10dp">
+                </TextView>
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:text="Berat Sekarang"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="130dp">
+                </TextView>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:text="Berat Target"
+                android:textSize="12sp"
+                android:layout_marginLeft="265dp"
+                android:layout_marginTop="130dp">
+            </TextView>
+
+
+            <LinearLayout
+                android:layout_marginBottom="15dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp">
+                android:orientation="horizontal"
+                android:layout_marginTop="150dp">
+
+                <LinearLayout
+
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/hm_tv_beratsekarang"
+                        android:textColor="@color/md_grey_500"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="45"
+                        android:textSize="25dp"
+                        android:padding="4dp"
+                        />
+
+
+                </LinearLayout>
+
                 <LinearLayout
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
+
+                    <ImageView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="Makanan"/>
+                        android:src="@drawable/baseline_keyboard_double_arrow_right_24"/>
 
                     <TextView
-                        android:id="@+id/hm_tv_makanan"
-                        android:layout_width="wrap_content"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0 Kcal"/>
+                        android:text="kilograms"
+                        android:textSize="10dp" />
+
 
                 </LinearLayout>
+
                 <LinearLayout
+
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="35dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="Workout"/>
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/hm_tv_workout"
-                        android:layout_width="wrap_content"
+                        android:text="45"
+                        android:textSize="25dp"
+                        android:padding="4dp"
+                        android:id="@+id/hm_tv_targetberat"
+                        android:textColor="@color/black"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0 Kcal"/>
+                        android:textStyle="bold"/>
+
 
                 </LinearLayout>
+
+
             </LinearLayout>
-        </LinearLayout>
-
-        <TextView
-            android:padding="@dimen/margin_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sisa Kalori"
-            android:layout_marginTop="110dp"
-            android:layout_marginLeft="10dp"
-            android:fontFamily="@font/montserrat_bold"/>
-
-        <TextView
-            android:id="@+id/hm_tv_sisakalori"
-            android:padding="@dimen/margin_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="500 kal"
-            android:layout_marginTop="130dp"
-            android:layout_marginLeft="10dp"
-            android:fontFamily="@font/montserrat_bold"/>
-
-        <TextView
-            android:padding="@dimen/margin_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tanggal Target"
-            android:layout_marginTop="110dp"
-            android:layout_marginLeft="210dp"
-            android:fontFamily="@font/montserrat_bold"/>
-
-        <TextView
-            android:id="@+id/hm_tv_tgltarget"
-            android:padding="@dimen/margin_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="22/02/2019"
-            android:layout_marginTop="130dp"
-            android:layout_marginLeft="210dp"
-            android:fontFamily="@font/montserrat_bold"/>
 
 
-    </androidx.cardview.widget.CardView>
 
+
+
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

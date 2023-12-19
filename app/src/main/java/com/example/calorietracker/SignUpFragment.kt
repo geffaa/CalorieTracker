@@ -1,6 +1,5 @@
 package com.example.calorietracker
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -11,18 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.fragment.app.Fragment
 import com.example.calorietracker.GetStarted.GS1_InputNameActivity
-import com.example.calorietracker.HomePage.HomePageActivity
 import com.example.calorietracker.databinding.FragmentSignUpBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
@@ -120,7 +114,7 @@ class SignUpFragment : Fragment() {
                                         startActivity(
                                             Intent(
                                                 requireActivity(),
-                                                HomePageActivity::class.java
+                                                MainActivity::class.java
                                             )
                                         )
                                     }
@@ -153,7 +147,7 @@ class SignUpFragment : Fragment() {
         val userEmail = sharedPref.getString("user_email", null)
 
         if (FirebaseAuth.getInstance().currentUser != null || userEmail != null) {
-            startActivity(Intent(requireActivity(), HomePageActivity::class.java))
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
         }
     }
 }

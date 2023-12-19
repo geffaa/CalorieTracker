@@ -4,8 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.calorietracker.HomePage.HomePageActivity
-import com.example.calorietracker.R
 import com.example.calorietracker.databinding.ActivityGs1InputNameBinding
 
 class GS1_InputNameActivity : AppCompatActivity() {

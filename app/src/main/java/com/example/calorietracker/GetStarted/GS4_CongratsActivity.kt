@@ -6,7 +6,7 @@ import com.example.calorietracker.R
 
 import android.content.Intent
 import android.widget.Button
-import com.example.calorietracker.HomePage.HomePageActivity
+import com.example.calorietracker.HomeFragment
 
 
 class GS4_CongratsActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class GS4_CongratsActivity : AppCompatActivity() {
 
         btnFinish.setOnClickListener {
             // Intent untuk berpindah ke HomepageActivity
-            val intent = Intent(this, HomePageActivity::class.java)
+            val intent = Intent(this, HomeFragment::class.java)
             startActivity(intent)
             finish() // Optional, menutup aktivitas saat ini agar tidak dapat kembali ke GS4_CongratsActivity dari HomepageActivity
         }

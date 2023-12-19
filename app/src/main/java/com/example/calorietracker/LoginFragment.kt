@@ -1,6 +1,5 @@
 package com.example.calorietracker
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
@@ -13,16 +12,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import com.example.calorietracker.GetStarted.GS1_InputNameActivity
 import com.example.calorietracker.GetStarted.GetStartedActivity
-import com.example.calorietracker.HomePage.HomePageActivity
 import com.example.calorietracker.databinding.FragmentLoginBinding
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
@@ -100,7 +95,7 @@ class LoginFragment : Fragment() {
                                             startActivity(
                                                 Intent(
                                                     requireActivity(),
-                                                    HomePageActivity::class.java
+                                                    HomeFragment::class.java
                                                 )
                                             )
                                         } else {
@@ -118,7 +113,7 @@ class LoginFragment : Fragment() {
                                                 startActivity(
                                                     Intent(
                                                         requireActivity(),
-                                                        HomePageActivity::class.java
+                                                        HomeFragment::class.java
                                                     )
                                                 )
                                             } else {
@@ -165,7 +160,7 @@ class LoginFragment : Fragment() {
                     startActivity(Intent(requireActivity(), GetStartedActivity::class.java))
                 } else {
                     // User sudah pernah login, arahkan ke HomeActivity
-                    startActivity(Intent(requireActivity(), HomePageActivity::class.java))
+                    startActivity(Intent(requireActivity(), HomeFragment::class.java))
                 }
             } else {
                 // Jika check gagal, tampilkan pesan ke pengguna.
@@ -182,7 +177,7 @@ class LoginFragment : Fragment() {
         val userEmail = sharedPref.getString("user_email", null)
 
         if (FirebaseAuth.getInstance().currentUser != null || userEmail != null) {
-            startActivity(Intent(requireActivity(), HomePageActivity::class.java))
+            startActivity(Intent(requireActivity(), HomeFragment::class.java))
         }
     }
 }
